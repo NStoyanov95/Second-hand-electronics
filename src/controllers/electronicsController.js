@@ -33,7 +33,7 @@ router.get('/:electronicsId/details', async (req, res) => {
         const isLogged = req.user;
         const isOwner = req.user?._id == singleElectronic.owner;
         const isBuyer = isInBuyinglist(singleElectronic.buyingList, req.user?._id);
-    
+
         res.render('electronics/details', { singleElectronic, isLogged, isOwner, isBuyer });
     } catch (error) {
         res.redirect('/404');
@@ -50,11 +50,33 @@ router.get('/:electronicsId/buy', async (req, res) => {
     res.redirect(`/electronics/${req.params.electronicsId}/details`)
 });
 
-router.get('/:electronicsId/delete', async(req,res)=>{
+router.get('/:electronicsId/delete', async (req, res) => {
     try {
         await electronicsService.delete(req.params.electronicsId);
         res.redirect('/electronics/catalog');
     } catch (error) {
+        res.redirect('/404');
+    }
+});
+
+router.get('/:electronicsId/edit', async (req, res) => {
+    try {
+        const singleElectronic = await electronicsService.getOne(req.params.electronicsId).lean();
+        res.render('electronics/edit', { singleElectronic });
+    } catch (error) {
+        console.log(error);
+        res.redirect('/404');
+    }
+});
+
+router.post('/:electronicsId/edit', async(req,res)=>{
+    const electronicData = req.body
+    try {
+        await electronicsService.update(req.params.electronicsId, electronicData);
+        res.redirect(`/electronics/${req.params.electronicsId}/details`);
+    } catch (error) {
+        console.log(error);
+
         res.redirect('/404');
     }
 })

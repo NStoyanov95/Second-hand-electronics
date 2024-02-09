@@ -26,4 +26,10 @@ router.get('/catalog', async (req, res) => {
     res.render('electronics/catalog', { electronics });
 })
 
+router.get('/:electronicsId/details', async (req, res) => {
+    const singleElectronic = await electronicsService.getOne(req.params.electronicsId).lean();
+
+    res.render('electronics/details', { singleElectronic });
+})
+
 module.exports = router;

@@ -8,6 +8,10 @@ router.use(homeController);
 router.use('/auth', authController);
 router.use('/electronics', electronicsController);
 
+router.get('*', (req,res)=>{
+    res.redirect('/404');
+})
+
 
 
 

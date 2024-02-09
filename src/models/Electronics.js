@@ -21,7 +21,7 @@ const electronicsSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please enter description'],
     },
-    productions: {
+    production: {
         type: Number,
         required: [true, 'Please enter production'],
     },

@@ -8,13 +8,14 @@ const { isAuth } = require('../middlewares/authMiddleware');
 
 const router = require('express').Router();
 
-router.get('/create', isAuth,(req, res) => {
+router.get('/create', isAuth, (req, res) => {
     res.render('electronics/create');
 });
 
 router.post('/create', async (req, res) => {
     const electronicsData = req.body;
     electronicsData.owner = req.user._id
+    console.log(electronicsData);
 
     try {
         await electronicsService.create(electronicsData);
@@ -52,7 +53,7 @@ router.get('/:electronicsId/buy', isAuth, async (req, res) => {
     res.redirect(`/electronics/${req.params.electronicsId}/details`)
 });
 
-router.get('/:electronicsId/delete',isAuth, async (req, res) => {
+router.get('/:electronicsId/delete', isAuth, async (req, res) => {
     try {
         await electronicsService.delete(req.params.electronicsId);
         res.redirect('/electronics/catalog');
@@ -61,7 +62,7 @@ router.get('/:electronicsId/delete',isAuth, async (req, res) => {
     }
 });
 
-router.get('/:electronicsId/edit', isAuth,async (req, res) => {
+router.get('/:electronicsId/edit', isAuth, async (req, res) => {
     try {
         const singleElectronic = await electronicsService.getOne(req.params.electronicsId).lean();
         res.render('electronics/edit', { singleElectronic });
@@ -72,14 +73,12 @@ router.get('/:electronicsId/edit', isAuth,async (req, res) => {
 });
 
 router.post('/:electronicsId/edit', async (req, res) => {
-    const electronicData = req.body
+    const singleElectronic = req.body;
     try {
-        await electronicsService.update(req.params.electronicsId, electronicData);
+        await electronicsService.update(req.params.electronicsId, singleElectronic);
         res.redirect(`/electronics/${req.params.electronicsId}/details`);
     } catch (error) {
-        console.log(error);
-
-        res.redirect('/404');
+        res.render(`electronics/edit`, { error: getErrorMessage(error), singleElectronic });
     }
 })
 

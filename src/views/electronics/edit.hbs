@@ -3,16 +3,20 @@
 <section id="editPage">
     <form id='editForm' method="POST">
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" value="{{singleElectronic.name}}">
+        <input type="text" id="name" name="name"
+            value="{{singleElectronic.name}}">
 
         <label for="type">Type:</label>
-        <input type="text" id="type" name="type" value="Laptop">
+        <input type="text" id="type" name="type"
+            value="{{singleElectronic.type}}">
 
         <label for="production">Year of Production:</label>
-        <input type="number" id="production" name="production" value="{{singleElectronic.production}}">
+        <input type="number" id="production" name="production"
+            value="{{singleElectronic.production}}">
 
         <label for="exploitation">Years of Exploitation:</label>
-        <input type="number" id="exploitation" name="exploitation" value="{{singleElectronic.exploitation}}">
+        <input type="number" id="exploitation" name="exploitation"
+            value="{{singleElectronic.exploitation}}">
 
         <label for="damages">Damages:</label>
         <input type="text" id="damages" name="damages"
@@ -23,7 +27,8 @@
             value="{{singleElectronic.image}}">
 
         <label for="price">Price:</label>
-        <input type="number" id="price" name="price" value="{{singleElectronic.price}}">
+        <input type="number" id="price" name="price"
+            value="{{singleElectronic.price}}">
 
         <label for="description">Description:</label>
         <input type="text" id="description" name="description"

@@ -11,4 +11,4 @@ exports.buy = (electronicsId, userId) => Electronics.findByIdAndUpdate(electroni
 
 exports.delete = (electronicsId) => Electronics.findByIdAndDelete(electronicsId);
 
-exports.update = (electronicsId, electronicData) => Electronics.findByIdAndUpdate(electronicsId,  electronicData, {runValidators: true});
+exports.update = (electronicsId, electronicData) => Electronics.findByIdAndUpdate(electronicsId, electronicData, { runValidators: true });

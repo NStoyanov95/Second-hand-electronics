@@ -2,12 +2,12 @@ const router = require('express').Router();
 
 const authService = require('../services/authService');
 
-const { isAuth } = require('../middlewares/authMiddleware');
+const { isAuth, isGuest } = require('../middlewares/authMiddleware');
 const { getErrorMessage } = require('../utils/errorUtils')
 
 
 //REGISTER
-router.get('/register', (req, res) => {
+router.get('/register', isGuest, (req, res) => {
     res.render('auth/register');
 });
 
@@ -24,7 +24,7 @@ router.post('/register', async (req, res) => {
 });
 
 //LOGIN
-router.get('/login', (req, res) => {
+router.get('/login', isGuest, (req, res) => {
     res.render('auth/login');
 });
 

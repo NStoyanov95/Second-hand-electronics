@@ -3,7 +3,7 @@ const electronicsService = require('../services/electronicsService');
 const { getErrorMessage } = require('../utils/errorUtils');
 const { isInBuyinglist } = require('../utils/helpers');
 
-const { isAuth } = require('../middlewares/authMiddleware');
+const { isAuth, isOwner } = require('../middlewares/authMiddleware');
 
 
 const router = require('express').Router();
@@ -15,7 +15,6 @@ router.get('/create', isAuth, (req, res) => {
 router.post('/create', async (req, res) => {
     const electronicsData = req.body;
     electronicsData.owner = req.user._id
-    console.log(electronicsData);
 
     try {
         await electronicsService.create(electronicsData);
@@ -62,7 +61,7 @@ router.get('/:electronicsId/delete', isAuth, async (req, res) => {
     }
 });
 
-router.get('/:electronicsId/edit', isAuth, async (req, res) => {
+router.get('/:electronicsId/edit', isAuth, isOwner, async (req, res) => {
     try {
         const singleElectronic = await electronicsService.getOne(req.params.electronicsId).lean();
         res.render('electronics/edit', { singleElectronic });

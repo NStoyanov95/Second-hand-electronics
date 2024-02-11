@@ -1,11 +1,13 @@
 const jwt = require('../lib/jwt');
 const ENV = require('../utils/constants');
 
+const electronicsService = require('../services/electronicsService');
+
 exports.auth = async (req, res, next) => {
     const token = req.cookies['auth'];
 
     if (!token) {
-      return next();
+        return next();
     }
 
     try {
@@ -23,8 +25,29 @@ exports.auth = async (req, res, next) => {
 
 exports.isAuth = (req, res, next) => {
     if (!req.user) {
-        return res.redirect('/auth/login');
+        return res.status(400).redirect('/404');
     }
 
     next();
+}
+
+exports.isOwner = async (req, res, next) => {
+    const electronic = await electronicsService.getOne(req.params.electronicsId);
+    let user = req.user._id;
+
+    if (user != electronic.owner) {
+        return res.redirect('/404');
+    }
+
+    return next();
+}
+
+exports.isGuest = (req, res, next) => {
+    const user = req.user;
+
+    if (!user) {
+        return next();
+    }
+
+     res.redirect('/404');
 }

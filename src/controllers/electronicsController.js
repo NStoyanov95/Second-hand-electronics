@@ -79,7 +79,10 @@ router.post('/:electronicsId/edit', async (req, res) => {
     } catch (error) {
         res.render(`electronics/edit`, { error: getErrorMessage(error), singleElectronic });
     }
-})
+});
+
+
+
 
 
 module.exports = router;

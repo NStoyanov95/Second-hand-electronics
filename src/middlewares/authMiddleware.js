@@ -25,11 +25,11 @@ exports.auth = async (req, res, next) => {
 
 exports.isAuth = (req, res, next) => {
     if (!req.user) {
-        return res.status(400).redirect('/404');
+        return res.redirect('/404');
     }
 
     next();
-}
+};
 
 exports.isOwner = async (req, res, next) => {
     const electronic = await electronicsService.getOne(req.params.electronicsId);
@@ -40,7 +40,7 @@ exports.isOwner = async (req, res, next) => {
     }
 
     return next();
-}
+};
 
 exports.isGuest = (req, res, next) => {
     const user = req.user;
@@ -50,4 +50,4 @@ exports.isGuest = (req, res, next) => {
     }
 
      res.redirect('/404');
-}
+};

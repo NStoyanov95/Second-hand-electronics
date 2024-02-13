@@ -81,8 +81,19 @@ router.post('/:electronicsId/edit', async (req, res) => {
     }
 });
 
+router.get('/search', isAuth, async (req, res) => {
+    const electronics = await electronicsService.getAll().lean()
+    res.render('search', { electronics });
+});
 
+router.post('/search', isAuth, async (req, res) => {
+    const { name, type } = req.body;
 
+    const electronics = await electronicsService.search(name, type).lean();
+    console.log(electronics);
+    res.render('search', { electronics })
+
+});
 
 
 module.exports = router;

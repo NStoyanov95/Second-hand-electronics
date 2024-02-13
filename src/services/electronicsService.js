@@ -12,3 +12,5 @@ exports.buy = (electronicsId, userId) => Electronics.findByIdAndUpdate(electroni
 exports.delete = (electronicsId) => Electronics.findByIdAndDelete(electronicsId);
 
 exports.update = (electronicsId, electronicData) => Electronics.findByIdAndUpdate(electronicsId, electronicData, { runValidators: true });
+
+exports.search = (name, type) => Electronics.find({ name: new RegExp(name, 'i'), type: new RegExp(type, 'i') });
